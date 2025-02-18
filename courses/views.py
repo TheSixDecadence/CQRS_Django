@@ -78,7 +78,12 @@ class GetCoursesView(View):
     # Método GET para obtener todos los cursos
     def get(self, request):
         courses = get_courses()
-        data = [{'id': course.id, 'title': course.title, 'description': course.description} for course in courses]
+        data = [{
+            'id': course.id, 
+            'title': course.title, 
+            'description': course.description
+            } 
+        for course in courses]
         return JsonResponse({"courses": data})
 
 class GetCourseView(View):
