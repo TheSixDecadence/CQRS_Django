@@ -1,10 +1,10 @@
 from courses.models import CourseCommand
 
-def create_course(title: str, description: str):
+def createCourse(title: str, description: str):
     #Crea un curso en la base de datos.
     return CourseCommand.objects.create(title=title, description=description)
 
-def update_course(course_id: int, title: str, description: str):
+def updateCourse(course_id: int, title: str, description: str):
     #Actualiza un curso existente.
     course = CourseCommand.objects.get(id=course_id)
     course.title = title
@@ -12,7 +12,7 @@ def update_course(course_id: int, title: str, description: str):
     course.save()
     return course
 
-def delete_course(course_id: int):
+def deleteCourse(course_id: int):
     #Elimina un curso de la base de datos.
     course = CourseCommand.objects.get(id=course_id)
     course.delete()

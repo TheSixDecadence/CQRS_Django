@@ -3,8 +3,8 @@ from django.http import JsonResponse
 from django.views import View
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from courses.commands import create_course, update_course, delete_course
-from courses.queries import get_course, get_courses
+from courses.commands import createCourse, updateCourse, deleteCourse
+from courses.queries import getCourse, getCourses
 from courses.models import CourseCommand, CourseQuery
 
 @method_decorator(csrf_exempt, name='dispatch') # Decorador para deshabilitar CSRF
@@ -23,14 +23,9 @@ class CreateCourseView(View):
             title = request.POST.get('title')
             description = request.POST.get('description')
 
-        course = create_course(title, description)
-        return JsonResponse({
-            "message": "Curso creado correctamente",
-            'id': course.id,
-            'title': course.title,
-            'description': course.description
-        }, status=201)
-    
+        createCourse(title, description)
+
+        return JsonResponse({"message": "Curso creado correctamente"}, status=201)
 
 @method_decorator(csrf_exempt, name='dispatch')
 class UpdateCourseView(View):
@@ -46,18 +41,10 @@ class UpdateCourseView(View):
             title = request.POST.get('title')
             description = request.POST.get('description')
 
-        if not title or not description:
-            return JsonResponse({"error": "Title and description are required"}, status=400)
-
         try:
             # Actualizar el curso
-            course = update_course(course_id, title, description)
-            return JsonResponse({
-                "message": "Curso actualizado correctamente",
-                'id': course.id,
-                'title': course.title,
-                'description': course.description
-            })
+            updateCourse(course_id, title, description)
+            return JsonResponse({"message": "Curso eliminado correctamente"}, status=201)
         except CourseCommand.DoesNotExist:
             # Si no se encuentra el curso, devolver un error 404
             return JsonResponse({"error": "Curso no encontrado"}, status=404)
@@ -68,8 +55,7 @@ class DeleteCourseView(View):
     def delete(self, request, course_id):
         try:
             # Eliminar el curso
-            delete_course(course_id)
-            return JsonResponse({"message": "Curso eliminado correctamente"}, status=200)
+            deleteCourse(course_id)
         except CourseCommand.DoesNotExist:
             # Si no se encuentra el curso, devolver un error 404
             return JsonResponse({"error": "Curso no encontrado"}, status=404)
@@ -77,7 +63,7 @@ class DeleteCourseView(View):
 class GetCoursesView(View):
     # Método GET para obtener todos los cursos
     def get(self, request):
-        courses = get_courses()
+        courses = getCourses()
         data = [{
             'id': course.id, 
             'title': course.title, 
@@ -90,7 +76,7 @@ class GetCourseView(View):
     # Método GET para obtener un curso específico
     def get(self, request, course_id):
         try:
-            course = get_course(course_id)
+            course = getCourse(course_id)
             return JsonResponse({
                 'id': course.id,
                 'title': course.title,

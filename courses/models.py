@@ -15,6 +15,7 @@ class CourseQuery(models.Model): # Se define el modelo CourseQuery
     id = models.IntegerField(primary_key=True)  # Mantiene la clave primaria para que Django lo reconozca
     title = models.CharField(max_length=100)
     description = models.TextField()
+    updated_at = models.DateTimeField()
 
     class Meta:
         db_table = 'courses'  # Usa la misma tabla
