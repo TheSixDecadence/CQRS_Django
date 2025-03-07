@@ -47,17 +47,17 @@ courses/:id:/
 
 POST:
 
-create/
+courses/create/
 
 
 PUT: 
 
-update/:id:/
+courses/update/:id:/
 
 
 DELETE:
 
-delete/:id:/
+courses/delete/:id:/
 
 # Body for the EndPoints:
     {
@@ -72,4 +72,4 @@ delete/:id:/
 - Maria Janet Sanchéz Marta
 - Brian Armando Sifuentes Muñoz
 
-    - TIDBIS71N
+    - IDGSBIS71N
